@@ -1,0 +1,31 @@
+.card{
+    text-align: justify;
+    border: solid 1px;
+    border-color: #f2f2f2;
+    font-size: 14px;
+    font-weight: 400;
+    color: $text-color;
+    font-family: PT Serif, Georgia, serif;
+    background-color: $bg-color;
+    &__wrap{
+       width: auto;
+       padding-left: $step*5;
+       padding-right: $step*3;
+    }
+    &__subtitle{
+        font-weight: 600;
+    }
+    &__image{
+        width: 280px;
+        height: 177px ;
+    }
+
+    &__ingredients{
+        background-color: $bg-color;
+
+    }
+    &__instruction{
+        background-color: $bg-color;
+    }  
+}
+

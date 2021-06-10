@@ -2,8 +2,16 @@
 
 # dependencies
 /node_modules
+/package-lock.json
 /.pnp
 .pnp.js
+
+### Sass ###
+.sass-cache/
+*.css.map
+
+### Less ###
+*.css 
 
 # testing
 /coverage
