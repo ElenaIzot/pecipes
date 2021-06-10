@@ -3,13 +3,16 @@ import Photo  from "./Photo";
 import Ingredient from "./Ingredient";
 import Instruction from "./Instruction";
 import { Container } from "react-bootstrap";
-import {BrowserRouter as Router, Link } from "react-router-dom";
+import {Link, useParams, useHistory } from "react-router-dom";
 
 
-function Card (){ 
+function Recipe (){ 
+    let history = useHistory();
+    let { id } = useParams();
+
     return(
         <Container className="card">
-            <Title title={'американские блины'} />
+            <Title title={`американские блины${id}`}> </Title>
             <Photo />
             <Ingredient />
             <Instruction />
@@ -19,4 +22,4 @@ function Card (){
     )
 };
 
-export default Card;
+export default Recipe;

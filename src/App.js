@@ -3,7 +3,7 @@ import "./styles/main.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./Component/Header/Header";
 import Footer from "./Component/Footer/Footer ";
-import Card from "./Component/Card/Card";
+import Recipe  from "./Component/Recipe/Recipe";
 import Main from "./Component/Main/Main";
 import Grid from "./Component/Grid/Grid";
 import Contact from "./Component/Contact";
@@ -19,12 +19,13 @@ function App() {
         <Switch>
           <Route exact path="/" component={Main} />
           <Route exact path="/recipes" children={<Grid />} />
-          <Route exact path="/cards/:id" children={<Card />} />
+          <Route exact path="/recipes/cards/:id" children={<Recipe />} />
           <Route exact path="/contact" component={Contact} />
         </Switch>
       </div>
        <Footer />
     </Router>
+
     </>
   );
 }
