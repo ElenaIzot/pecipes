@@ -2,6 +2,7 @@ import { Row, Col, Pagination, Card, Button } from "react-bootstrap";
 import {BrowserRouter as Router, Switch, Route, Link, useParams, useLocation, useHistory} from "react-router-dom";
 // import GridItem from "./GridItem";
 import  Recipe from "../Recipe/Recipe";
+import { getRecipes, getRecipesFromServer } from '../../Models/Recipets';
 
 function useQuery() {
      return new URLSearchParams(useLocation().search);
@@ -10,85 +11,61 @@ function useQuery() {
 function Grid() {
     let query = useQuery();
     const pageNumber = parseInt(query.get("page") || '0');
-    console.log(pageNumber);
 
-
-    const cards = getCards(pageNumber);
-    const cardsRendered = cards.map(card => {
-      const link = `recipes/cards/${card.id}`;
+    const response = getRecipesFromServer(pageNumber);
+    const recipesRendered = response.result.map(recipe => {
       return (
         <Col xs={6} md={3}>
-            <GridItem key={card.id}></GridItem>
-            <Link to={link}>Открыть рецепт {card.id}</Link>
+              <GridItem key={recipe.id} recipe={recipe}></GridItem>
         </Col>
       )
     });
- 
-    const linkToNextPage = `/recipes/?page=${pageNumber + 1}`;
-    const linkToPrevPage = `/recipes/?page=${pageNumber - 1}`;
+
+    const linkToNextPage = `/recipes/?page=${response.page + 1}`;
+    const linkToPrevPage = `/recipes/?page=${response.page - 1}`;
 
     return (
       <div>
         <Row>
-          {cardsRendered}
+                {recipesRendered}
           <Route exact path="/recipes/card/:id" children={<Recipe />} />
         </Row>
-         
-        
+
         <Link to={linkToPrevPage}>PrevPage</Link>
         <span>Page №{pageNumber}</span>
         <Link to={linkToNextPage}>NextPage</Link>
 
-        <Pages> </Pages>
+            <Pages totalPages={response.totalPages}> </Pages>
       </div>
     )
 }
 
-function getCards(pageNumber) {
-  const CARDS_PER_PAGE = 16;
-  const cards = [];
- 
-  
-  for (let i = 1; i <= CARDS_PER_PAGE; ++i) {
-    const cardIndex = pageNumber * CARDS_PER_PAGE + i;
-    cards.push({
-      id: cardIndex,
-    });
-  }
-  
-  return cards;
-}
 
+function GridItem({ recipe }) {
+    const link = `recipes/cards/${recipe.id}`;
 
-function GridItem() {
-  let history = useHistory();
-
-  let { id } = useParams(); //ID не получает! ПОЭТОМУ НЕ ВЫВОДИТ НОМЕР РЕЦЕПТА В ТЕКСТЕ
-  console.log({id})
   return(
-      <Card> 
-      <Card.Img variant="top" src="holder.js/100px180" />
+      <Card>
+          <Card.Img variant="top" src={recipe.image} />
       <Card.Body>
-              <Card.Title>Рецепт № {id} </Card.Title> 
-              <Card.Text> 
-              Some quick example text to build on the card title and make up the bulk of the card's content.
+              <Card.Title>Рецепт № {recipe.id} </Card.Title>
+              <Card.Text>
+                  Some quick example text to build on the card title and make up the bulk of the card's content.
               </Card.Text>
-              <Link to="`recipes/cards/:${id}`">Открыть рецепт </Link>
-              
+              <Link to={link}>Открыть рецепт {recipe.id}</Link>
       </Card.Body>
       </Card>
   )
 }
 
 
-
-function Pages (pageNumber) {
+function Pages({ totalPages }) {
     let active = 1;
     let items = [];
-    for (let number = 1; number <= 20; number++) {
+    for (let page = 1; page <= totalPages; page++) {
       items.push(
-        <Pagination.Item key={number} active={number === active}>
-          {number}
+          <Pagination.Item key={page} active={page === active}>
+              {page}
         </Pagination.Item>,
       );
     }
