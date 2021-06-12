@@ -7,7 +7,6 @@ import Recipe  from "./Component/Recipe/Recipe";
 import Main from "./Component/Main/Main";
 import Grid from "./Component/Grid/Grid";
 import Contact from "./Component/Contact";
-
 import {BrowserRouter as Router, Switch, Route, Link, useParams} from "react-router-dom";
 
 function App() {

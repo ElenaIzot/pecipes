@@ -14,7 +14,7 @@ function Recipe() {
     const recipe = getRecipe(id);
 
     return(
-        <Container className="card">
+        <Container className="section-resipes recipe">
             <Title title={`американские блины ${recipe.id}`}> </Title>
             <Image src={recipe.image} fluid />
             <Ingredient />
