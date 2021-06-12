@@ -1,19 +1,22 @@
 import Title from "../Title";
-import Photo  from "./Photo";
 import Ingredient from "./Ingredient";
 import Instruction from "./Instruction";
 import { Container } from "react-bootstrap";
 import {Link, useParams, useHistory } from "react-router-dom";
+import Image from 'react-bootstrap/Image'
+import { getRecipe } from "../../Models/Recipets";
 
 
-function Recipe (){ 
+function Recipe() {
     let history = useHistory();
     let { id } = useParams();
 
+    const recipe = getRecipe(id);
+
     return(
         <Container className="card">
-            <Title title={`американские блины${id}`}> </Title>
-            <Photo />
+            <Title title={`американские блины ${recipe.id}`}> </Title>
+            <Image src={recipe.image} fluid />
             <Ingredient />
             <Instruction />
             <Link to="/">Вернуться на главную</Link>
