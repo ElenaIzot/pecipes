@@ -1,14 +1,16 @@
 import { Container,Carousel } from "react-bootstrap";
-import Title from "../Title";
 import { Row, Col } from "react-bootstrap";
 
 function Main (){
+    let title = 'рецепты';
+    let result = title.charAt(0).toUpperCase() + title.slice(1);
+
     return(
         <Container className="section-content">
             <Row>
                 <Col xs={1} md={1}></Col>
                 <Col xs={10} md={10}> 
-                    <Title title={'рецепты'} />
+                    <h1 className="section-content__title">{result}</h1>
                     <div className="section-content__text">
                     "Кулинария — как любовь: в неё либо нужно окунуться с головой, либо вообще не погружаться."
                     </div>

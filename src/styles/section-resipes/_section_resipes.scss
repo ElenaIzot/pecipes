@@ -1,6 +1,7 @@
 .section-resipes{
     height: auto;
-    padding: $step*4 $step*2 ;
+    padding: $step*4 $step*2;
+    font-family: PT Serif, Georgia, serif;
     color: $text-color;
     background-color: $bg-color;
     &__pages {

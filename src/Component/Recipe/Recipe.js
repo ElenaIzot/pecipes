@@ -1,4 +1,3 @@
-import Title from "../Title";
 import Ingredient from "./Ingredient";
 import Instruction from "./Instruction";
 import { Container } from "react-bootstrap";
@@ -12,11 +11,15 @@ function Recipe() {
     let { id } = useParams();
 
     const recipe = getRecipe(id);
+    let title = 'американские блины';
+    let result = title.charAt(0).toUpperCase() + title.slice(1);
 
     return(
         <Container className="section-resipes recipe">
-            <Title title={`американские блины ${recipe.id}`}> </Title>
-            <Image src={recipe.image} fluid />
+
+           
+            <h1 className="recipe__title">{result} {recipe.id}</h1>
+            <Image  src={recipe.image} fluid />
             <Ingredient />
             <Instruction />
             <Link to="/">Вернуться на главную</Link>

@@ -1,17 +1,15 @@
 @import "../variables";
 
 .header {
-    font-family: 'Roboto', sans-serif;
     color: $text-color;
     background-color: $bg-color;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-family: PT Serif, Georgia, serif;
+    font-size: $font-size-medium;
 }
 
 .menu {
     &__link{
         display: flex;
-        font-size: 16px;
         padding-left: $step*2; 
         text-align: center;
         line-height: 2;
