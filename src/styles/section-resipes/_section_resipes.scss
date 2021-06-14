@@ -1,0 +1,39 @@
+.section-resipes{
+    height: auto;
+    padding: $step*4 $step*2;
+    font-family: PT Serif, Georgia, serif;
+    color: $text-color;
+    background-color: $bg-color;
+    &__pages {
+       background-color: $bg-color;
+    }
+}
+
+.pagination > li > a
+{
+    background-color: $bg-color;
+    color:$color-btn;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: $bg-color;
+    background-color: $color-active-btn;
+    border-color:$color-active-btn;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: $color-active-btn;
+    border: solid 1px $color-active-btn;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: $color-active-btn;
+    border: solid 1px $color-active-btn;
+}

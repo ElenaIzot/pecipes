@@ -1,6 +1,8 @@
 import { Row, Col, Pagination, Card, Button } from "react-bootstrap";
 import {BrowserRouter as Router, Switch, Route, Link, useParams, useLocation, useHistory} from "react-router-dom";
 // import GridItem from "./GridItem";
+import { Container } from "react-bootstrap";
+
 import  Recipe from "../Recipe/Recipe";
 import { getRecipes, getRecipesFromServer } from '../../Models/Recipets';
 
@@ -21,13 +23,13 @@ function Grid() {
       )
     });
 
-    const linkToNextPage = `/recipes/?page=${response.page + 1}`;
-    const linkToPrevPage = `/recipes/?page=${response.page - 1}`;
+    const linkToNextPage = `/recipes/?page=${response.nextPage}`;
+    const linkToPrevPage = `/recipes/?page=${response.prevPage}`;
 
     return (
-      <div>
+      <Container className="section-resipes">
         <Row>
-                {recipesRendered}
+            {recipesRendered}
           <Route exact path="/recipes/card/:id" children={<Recipe />} />
         </Row>
 
@@ -35,8 +37,8 @@ function Grid() {
         <span>Page №{pageNumber}</span>
         <Link to={linkToNextPage}>NextPage</Link>
 
-            <Pages totalPages={response.totalPages}> </Pages>
-      </div>
+        <Pages className="section-resipes__pages" totalPages={response.totalPages}> </Pages>
+      </Container>
     )
 }
 
@@ -45,14 +47,14 @@ function GridItem({ recipe }) {
     const link = `recipes/cards/${recipe.id}`;
 
   return(
-      <Card>
+      <Card className="card">
           <Card.Img variant="top" src={recipe.image} />
       <Card.Body>
-              <Card.Title>Рецепт № {recipe.id} </Card.Title>
-              <Card.Text>
+              <Card.Title className="card__title">Рецепт № {recipe.id} </Card.Title>
+              <Card.Text className="card__text">
                   Some quick example text to build on the card title and make up the bulk of the card's content.
               </Card.Text>
-              <Link to={link}>Открыть рецепт {recipe.id}</Link>
+              <Link className="card__link" to={link}>Открыть рецепт {recipe.id}</Link>
       </Card.Body>
       </Card>
   )
@@ -71,8 +73,10 @@ function Pages({ totalPages }) {
     }
 
     return(
-    <Pagination>
+    <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
+      <Pagination.Prev className="outline-secondary">Предыдущая </Pagination.Prev>
      {items}
+     <Pagination.Next >Следующая</Pagination.Next>
     </Pagination>
     )
 }

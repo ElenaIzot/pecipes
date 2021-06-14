@@ -1,8 +1,6 @@
-.card{
+.recipe{
     text-align: justify;
-    border: solid 1px;
-    border-color: #f2f2f2;
-    font-size: 14px;
+    border: solid 1px $border-color;
     font-weight: 400;
     color: $text-color;
     font-family: PT Serif, Georgia, serif;
@@ -12,6 +10,16 @@
        padding-left: $step*5;
        padding-right: $step*3;
     }
+    &__title{
+        font-size: 48px;
+        font-weight: 800;
+        color: $text-color;
+        padding-top: $step*2;
+        padding-bottom: $step*2;
+        text-align: center;
+        font-family: PT Serif, Georgia, serif;
+    }
+
     &__subtitle{
         font-weight: 600;
     }

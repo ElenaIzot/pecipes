@@ -9,8 +9,14 @@
     margin-bottom: 72px;
 }
 
-.section-mainpage{margin-bottom: 72px;}
+.section-content{margin-bottom: 72px;}
 
 .card{
-    margin-bottom: 72px;
+    margin-bottom: $step*4;
+}
+
+.footer{
+    flex-shrink: 0;
+    min-height: 40vh;
+    max-height: 50vh;
 }

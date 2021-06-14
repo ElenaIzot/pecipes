@@ -1,10 +1,10 @@
-import {  Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 function Footer (){
     return(
-        <div className="footer">
-           © ООО «ЕДА.РУ», 2021. ВСЕ ПРАВА ЗАЩИЩЕНЫ. ДЛЯ ЛИЦ СТАРШЕ 18 ЛЕТ.
-        </div>
+        <Container className="footer">
+           © 2021. ВСЕ ПРАВА ЗАЩИЩЕНЫ. ДЛЯ ЛИЦ СТАРШЕ 18 ЛЕТ.
+        </Container>
     )
 }
 
