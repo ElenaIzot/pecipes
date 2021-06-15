@@ -17,9 +17,6 @@ const images = [
   'https://images.pexels.com/photos/1755785/pexels-photo-1755785.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
   'https://images.pexels.com/photos/793762/pexels-photo-793762.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
   'https://images.pexels.com/photos/6420305/pexels-photo-6420305.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-
-  
-
 ]
 
 
@@ -52,7 +49,7 @@ export function getRecipesFromServer(page) {
     totalPages: TOTAL_PAGES,
     nextPage: page + 1,
     prevPage: page - 1,
-    curretPage: page,
+    currentPage: page,
     result: getRecipes(page),
   }
 }
