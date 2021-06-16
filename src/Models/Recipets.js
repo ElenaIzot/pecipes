@@ -42,7 +42,7 @@ export function getRecipes(pageNumber) {
 
 
 export function getRecipesFromServer(page) {
-  const TOTAL_PAGES = 8;
+  const TOTAL_PAGES = 100;
   const ITEM_PER_PAGE = 16;
 
   return {
