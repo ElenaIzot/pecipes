@@ -57,7 +57,7 @@ function Pages() {
   const pageNumber = parseInt(query.get("page") || '0');
   const response = getRecipesFromServer(pageNumber);
   const { totalPages, nextPage, prevPage, currentPage, result } = response;
-  let active = currentPage;
+ 
   let items = [];
 
 
@@ -84,20 +84,20 @@ function Pages() {
     }
 
     items.push(
-      <Pagination.Item key={page} active={page === active} onClick={navigate}>
+      <Pagination.Item key={page} active={page === currentPage} onClick={navigate}>
         {page}
       </Pagination.Item>
     );
   }
 
-  if (items[0].key == 1 && currentPage == 1) {
+  if (currentPage == 1) {
     return (
       <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
         {items}
         <Pagination.Next onClick={handleClickNext}>Следующая</Pagination.Next>
       </Pagination>
     )
-  } else if (items[5].key == totalPages && currentPage == totalPages) {
+  } else if (currentPage == totalPages) {
     return (
       <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
         <Pagination.Next onClick={handleClickPrev}>Предыдущая</Pagination.Next>
