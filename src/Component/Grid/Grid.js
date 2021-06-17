@@ -1,7 +1,6 @@
 import { Row, Col, Pagination, Card } from "react-bootstrap";
 import { Route, Link, useParams, useLocation, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { useEffect } from "react";
 import Recipe from "../Recipe/Recipe";
 import { getRecipesFromServer } from '../../Models/Recipets';
 
@@ -36,13 +35,23 @@ function Grid() {
 function GridItem({ recipe }) {
   const link = `recipes/cards/${recipe.id}`;
 
+  // ТУТ НУЖНО РЕАЛИЗОВАТЬ ВЫВОД НАЧАЛА ИНСТРУКЦИИ?
+  const shortInstruction = recipe.instruction.map(step =>{
+    if (step == recipe.instruction[0]){
+      return step;
+    }
+  })
+
   return (
     <Card className="card">
       <Card.Img variant="top" src={recipe.image} />
       <Card.Body>
-        <Card.Title className="card__title">Рецепт № {recipe.id} </Card.Title>
+        <Card.Title className="card__title">{recipe.title}</Card.Title>
         <Card.Text className="card__text">
-          Some quick example text to build on the card title and make up the bulk of the card's content.
+        <div className="card__time">Время приготовления {recipe.time} мин</div>
+         {/* ТУТ ВЫВОДИТЬ ИНФОРМАЦИЮ О КОЛ_ВЕ ИНГРИДИЕНТОВ, ВРЕМЕНИ */}
+  
+          {shortInstruction}
         </Card.Text>
         <Link className="card__link" to={link}>Открыть рецепт {recipe.id}</Link>
       </Card.Body>

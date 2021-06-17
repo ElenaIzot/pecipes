@@ -3,12 +3,15 @@
     color: $text-color;
     &__title{
         font-size: 18px;
-        width: 600;
+        font-weight: 600;
     }
     &__text{
         font-size: $font-size-medium;
     }
-
+    &__time{
+        font-size: 12px;
+        font-style: italic;
+    }
     &__link{
         text-align: right;
         font-weight: 600;
@@ -20,4 +23,5 @@
         text-decoration: none;
        }
        
+    
 }
