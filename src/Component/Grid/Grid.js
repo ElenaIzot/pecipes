@@ -35,13 +35,6 @@ function Grid() {
 function GridItem({ recipe }) {
   const link = `recipes/cards/${recipe.id}`;
 
-  // ТУТ НУЖНО РЕАЛИЗОВАТЬ ВЫВОД НАЧАЛА ИНСТРУКЦИИ?
-  const shortInstruction = recipe.instruction.map(step =>{
-    if (step == recipe.instruction[0]){
-      return step;
-    }
-  })
-
   return (
     <Card className="card">
       <Card.Img variant="top" src={recipe.image} />
@@ -49,9 +42,8 @@ function GridItem({ recipe }) {
         <Card.Title className="card__title">{recipe.title}</Card.Title>
         <Card.Text className="card__text">
         <div className="card__time">Время приготовления {recipe.time} мин</div>
-         {/* ТУТ ВЫВОДИТЬ ИНФОРМАЦИЮ О КОЛ_ВЕ ИНГРИДИЕНТОВ, ВРЕМЕНИ */}
-  
-          {shortInstruction}
+        <div className="card__text">Ингридиентов: {recipe.ingridients.length}</div>
+        <div className="card__text">Количество порций: {recipe.portions}</div>    
         </Card.Text>
         <Link className="card__link" to={link}>Открыть рецепт {recipe.id}</Link>
       </Card.Body>

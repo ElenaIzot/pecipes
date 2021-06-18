@@ -21,7 +21,7 @@ function Recipe() {
             <Image className="recipe__photo img-fluid mx-auto d-block" src={recipe.image} fluid />
             <Ingredient className='ingredient col-10 col-md-10' />
             <Instruction />
-            <Link className="recipe__link  recipe__link col-2 offset-5 offset-md-5" to="/recipes">Вернуться к рецептам</Link>
+            <Link className="recipe__link  recipe__link col-2 offset-md-5" to="/recipes">Вернуться к рецептам</Link>
         </Container>
     )
 };
