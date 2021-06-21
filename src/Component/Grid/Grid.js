@@ -1,7 +1,6 @@
 import { Row, Col, Pagination, Card } from "react-bootstrap";
 import { Route, Link, useParams, useLocation, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { useEffect } from "react";
 import Recipe from "../Recipe/Recipe";
 import { getRecipesFromServer } from '../../Models/Recipets';
 
@@ -40,9 +39,11 @@ function GridItem({ recipe }) {
     <Card className="card">
       <Card.Img variant="top" src={recipe.image} />
       <Card.Body>
-        <Card.Title className="card__title">Рецепт № {recipe.id} </Card.Title>
+        <Card.Title className="card__title">{recipe.title}</Card.Title>
         <Card.Text className="card__text">
-          Some quick example text to build on the card title and make up the bulk of the card's content.
+        <div className="card__time">Время приготовления {recipe.time} мин</div>
+        <div className="card__text">Ингридиентов: {recipe.ingridients.length}</div>
+        <div className="card__text">Количество порций: {recipe.portions}</div>    
         </Card.Text>
         <Link className="card__link" to={link}>Открыть рецепт {recipe.id}</Link>
       </Card.Body>
