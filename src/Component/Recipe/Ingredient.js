@@ -2,7 +2,7 @@ import { getRecipe } from "../../Models/Recipets";
 import { useParams, useHistory } from "react-router-dom";
 
 function Ingredient (){
-  let history = useHistory();
+
   const { id } = useParams();
   
   const recipe = getRecipe(id);
