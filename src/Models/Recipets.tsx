@@ -249,24 +249,24 @@ const recipes = [
   },
 ]
 
-interface Ingridients{
+interface Ingridient {
   name: string,
   count?: number| null,
   measure: string,
 }
 
-interface Recipes {
+interface Recipe {
   id: number,
   image: string,
   title: string,
   time: number,
   portions: number,
-  ingridients: Ingridients[],
+  ingridients: Ingridient[],
   instruction: string[],
 }
 
-export function getRecipe(id: number): Recipes {
-  const copyFrom: Recipes = recipes[id % recipes.length];
+export function getRecipe(id: number): Recipe {
+  const copyFrom: Recipe = recipes[id % recipes.length];
   let {image, title,time,ingridients, instruction, portions} = copyFrom;
 
   return {
@@ -280,9 +280,9 @@ export function getRecipe(id: number): Recipes {
   }
 }
 
-export function getRecipes(pageNumber: number): Recipes[] {
+function getRecipes(pageNumber: number): Recipe[] {
   const RECIPIES_PER_PAGE: number = 16;
-  const recipies: Recipes[] = [];
+  const recipies: Recipe[] = [];
 
   for (let i = 1; i <= RECIPIES_PER_PAGE; ++i) {
     const cardIndex: number = pageNumber * RECIPIES_PER_PAGE + i;
@@ -292,15 +292,15 @@ export function getRecipes(pageNumber: number): Recipes[] {
   return recipies;
 }
 
-interface Page {
+interface Page<T> {
   totalPages: number,
   nextPage: number,
   prevPage: number,
   currentPage: number,
-  result: any,
+  result: T[],
 }
 
-export function getRecipesFromServer(page: number): Page {
+export function getRecipesFromServer(page: number): Page<Recipe> {
   const TOTAL_PAGES: number = 100;
   const ITEM_PER_PAGE: number = 16;
 
@@ -313,11 +313,13 @@ export function getRecipesFromServer(page: number): Page {
   }
 }
 
-export function getRecipesFromServerAsync(page: number): Promise<any> {
+export function getRecipesFromServerAsync(page: number): Promise<Page<Recipe>> {
   return new Promise((resolve, reject) => {
     const delay: number = Math.random() * (5000 - 200) + 200; // 0.2 to 5 seconds
     setTimeout(() => {
       resolve(getRecipesFromServer(page)); // resolve promise
     }, delay);
   });
+
 }
+

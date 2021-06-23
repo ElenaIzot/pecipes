@@ -1,35 +1,74 @@
-import { Row, Col, Pagination, Card } from "react-bootstrap";
-import { Route, Link, useParams, useLocation, useHistory } from "react-router-dom";
+import { Row, Col, Pagination, Card, Spinner } from "react-bootstrap";
+import { Route, Link, useLocation, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Recipe from "../Recipe/Recipe";
-import { getRecipesFromServer } from '../../Models/Recipets';
+import { getRecipesFromServerAsync } from '../../Models/Recipets';
+import { useState, useEffect } from 'react';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+// function loading(){
+//   if(){
+//     setIsLoading(true);
+//   }
+// }
+
 function Grid() {
   const query = useQuery();
   const pageNumber = parseInt(query.get("page") || '0');
 
-  const response = getRecipesFromServer(pageNumber);
-  const recipesRendered = response.result.map(recipe => {
-    return (
-      <Col xs={6} md={3}>
-        <GridItem key={recipe.id} recipe={recipe}></GridItem>
-      </Col>
-    )
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState({});
 
-  return (
-    <Container className="section-resipes">
-      <Row>
-        {recipesRendered}
-        <Route exact path="/recipes/card/:id" children={<Recipe />} />
-      </Row>
-      <Pages className="section-resipes__pages" totalPages={response}> </Pages>
-    </Container>
-  )
+  useEffect(() => {
+    getRecipesFromServerAsync(pageNumber).then(response => {
+      setPage(response)
+    });
+    setIsLoading({ isLoading: false });
+
+  }, []);
+
+  const { totalPages, result } = page;
+  let arrayRecipes = [];
+  let recipesRendered = [];
+
+  if ({isLoading} == true) {
+    return (
+      <Container className="section-resipes">
+        <Row>
+          <div>Идет загрузка...</div>
+          <Spinner animation="border" variant="secondary"></Spinner> 
+          <Route exact path="/recipes/card/:id" children={<Recipe />} />
+        </Row>
+        <Pages className="section-resipes__pages" totalPages={totalPages}> </Pages>
+      </Container>
+    )
+  } else {
+    for (let elem in result) {
+      arrayRecipes.push(result[elem])
+    }
+
+    recipesRendered = arrayRecipes.map(recipe => {
+      return (
+        <Col xs={6} md={3}>
+          <GridItem key={recipe.id} recipe={recipe}></GridItem>
+        </Col>
+      )
+    });
+
+    return (
+      <Container className="section-resipes">
+        <Row>
+          {recipesRendered}
+          <Route exact path="/recipes/card/:id" children={<Recipe />} />
+        </Row>
+        <Pages className="section-resipes__pages" totalPages={totalPages}> </Pages>
+      </Container>
+    )
+  }
+
 }
 
 function GridItem({ recipe }) {
@@ -41,9 +80,9 @@ function GridItem({ recipe }) {
       <Card.Body>
         <Card.Title className="card__title">{recipe.title}</Card.Title>
         <Card.Text className="card__text">
-        <div className="card__time">Время приготовления {recipe.time} мин</div>
-        <div className="card__text">Ингридиентов: {recipe.ingridients.length}</div>
-        <div className="card__text">Количество порций: {recipe.portions}</div>    
+          <div className="card__time">Время приготовления {recipe.time} мин</div>
+          <div className="card__text">Ингридиентов: {recipe.ingridients.length}</div>
+          <div className="card__text">Количество порций: {recipe.portions}</div>
         </Card.Text>
         <Link className="card__link" to={link}>Открыть рецепт {recipe.id}</Link>
       </Card.Body>
@@ -55,10 +94,16 @@ function GridItem({ recipe }) {
 function Pages() {
   const query = useQuery();
   const history = useHistory();
-  const pageNumber = parseInt(query.get("page") || '0');
-  const response = getRecipesFromServer(pageNumber);
-  const { totalPages, nextPage, prevPage, currentPage, result } = response;
- 
+  const pageNumber = parseInt(query.get("page") || '0')
+  const [page, setPage] = useState({});
+
+  useEffect(() => {
+    getRecipesFromServerAsync(pageNumber).then(response => {
+      setPage(response);
+    })
+  }, [page]);
+
+  const { totalPages, nextPage, prevPage, currentPage } = page;
   let items = [];
 
 
