@@ -17,11 +17,11 @@ function Recipe() {
 
     return(
         <Container className="section-resipes recipe">
-            <h1 className="recipe__title">{titleRendered}</h1> 
-            <Image className="recipe__photo img-fluid mx-auto d-block" src={recipe.image} fluid />
+            <h1 className="recipe__title" data-tooltip="Всплывающая подсказка">{titleRendered}</h1> 
+            <Image className="recipe__photo img-fluid mx-auto d-block rounded" src={recipe.image}/>
             <Ingredient className='ingredient col-10 col-md-10' />
             <Instruction />
-            <Link className="recipe__link  recipe__link col-2 offset-md-5" to="/recipes">Вернуться к рецептам</Link>
+            <Link className="recipe__link col-2 offset-md-5" to="/recipes">Вернуться к рецептам</Link>
         </Container>
     )
 };

@@ -9,12 +9,6 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-// function loading(){
-//   if(){
-//     setIsLoading(true);
-//   }
-// }
-
 function Grid() {
   const query = useQuery();
   const pageNumber = parseInt(query.get("page") || '0');
@@ -25,32 +19,29 @@ function Grid() {
   useEffect(() => {
     getRecipesFromServerAsync(pageNumber).then(response => {
       setPage(response)
-    });
-    setIsLoading({ isLoading: false });
+      setIsLoading(false);
+    })
+  }, [page]);
 
-  }, []);
+  // function handleClick() {
+    
+  //   console.log('По ссылке кликнули.');
+  //   return (setIsLoading(true));
+  // }
 
-  const { totalPages, result } = page;
-  let arrayRecipes = [];
-  let recipesRendered = [];
-
-  if ({isLoading} == true) {
+  if (isLoading === true) {
     return (
       <Container className="section-resipes">
-        <Row>
-          <div>Идет загрузка...</div>
-          <Spinner animation="border" variant="secondary"></Spinner> 
-          <Route exact path="/recipes/card/:id" children={<Recipe />} />
-        </Row>
-        <Pages className="section-resipes__pages" totalPages={totalPages}> </Pages>
+        <div className="page-loader">
+          <div className="page-loader__text">Идет загрузка</div>
+          <Spinner animation="border" variant="secondary" className="page-loader__spinner"></Spinner>
+        </div>
+        <Route exact path="/recipes/card/:id" children={<Recipe />} />
+        <Pages className="section-resipes__pages" totalPages={page.totalPages}> </Pages>
       </Container>
     )
   } else {
-    for (let elem in result) {
-      arrayRecipes.push(result[elem])
-    }
-
-    recipesRendered = arrayRecipes.map(recipe => {
+    let recipesRendered = page.result.map(recipe => {
       return (
         <Col xs={6} md={3}>
           <GridItem key={recipe.id} recipe={recipe}></GridItem>
@@ -64,11 +55,10 @@ function Grid() {
           {recipesRendered}
           <Route exact path="/recipes/card/:id" children={<Recipe />} />
         </Row>
-        <Pages className="section-resipes__pages" totalPages={totalPages}> </Pages>
+        <Pages className="section-resipes__pages" totalPages={page.totalPages}> </Pages>
       </Container>
     )
   }
-
 }
 
 function GridItem({ recipe }) {
@@ -90,60 +80,65 @@ function GridItem({ recipe }) {
   )
 }
 
-
 function Pages() {
   const query = useQuery();
   const history = useHistory();
   const pageNumber = parseInt(query.get("page") || '0')
+
   const [page, setPage] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+
     getRecipesFromServerAsync(pageNumber).then(response => {
-      setPage(response);
-    })
+      setPage(response)
+      setIsLoading(false);
+    });
+
+
   }, [page]);
 
-  const { totalPages, nextPage, prevPage, currentPage } = page;
   let items = [];
-
 
   function handleClickNext(e) {
     e.preventDefault();
-    const link = `/recipes/?page=${nextPage}`;
+    const link = `/recipes/?page=${page.nextPage}`;
     history.push(link);
   }
 
   function handleClickPrev(e) {
     e.preventDefault();
-    const link = `/recipes/?page=${prevPage}`;
+    const link = `/recipes/?page=${page.prevPage}`;
     history.push(link);
+
   }
 
   const pageNeighbours = 5;
-  const startPage = Math.max(1, currentPage - pageNeighbours);
-  const endPage = Math.min(totalPages, currentPage + pageNeighbours);
+  const startPage = Math.max(1, page.currentPage - pageNeighbours);
+  const endPage = Math.min(page.totalPages, page.currentPage + pageNeighbours);
 
   for (let page = startPage; page <= endPage; page++) {
     function navigate() {
       const link = `/recipes/?page=${page}`;
+
       history.push(link)
     }
 
     items.push(
-      <Pagination.Item key={page} active={page === currentPage} onClick={navigate}>
+      <Pagination.Item key={page} active={page === page.currentPage} onClick={navigate}>
         {page}
       </Pagination.Item>
     );
   }
 
-  if (currentPage == 1) {
+  if (page.currentPage == 1) {
     return (
       <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
         {items}
         <Pagination.Next onClick={handleClickNext}>Следующая</Pagination.Next>
       </Pagination>
     )
-  } else if (currentPage == totalPages) {
+  } else if (page.currentPage == page.totalPages) {
     return (
       <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
         <Pagination.Next onClick={handleClickPrev}>Предыдущая</Pagination.Next>
