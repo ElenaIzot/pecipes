@@ -9,6 +9,23 @@
     }
 }
 
+.page-loader{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: $step*4 $step*2;
+    align-items: center;
+
+     &__text{
+        padding-bottom: $step*3;
+        color: $color-btn;
+        font-size: 18px;
+        line-height: 2;
+        font-weight: 600;
+    }
+}
+
+
 .pagination > li > a
 {
     background-color: $bg-color;
