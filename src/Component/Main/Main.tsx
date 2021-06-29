@@ -1,9 +1,9 @@
 import { Container,Carousel } from "react-bootstrap";
 import { Row, Col } from "react-bootstrap";
 
-function Main (){
-    let title = 'рецепты';
-    let result = title.charAt(0).toUpperCase() + title.slice(1);
+function Main(): JSX.Element {
+    let title: string = 'рецепты';
+    let result: string = title.charAt(0).toUpperCase() + title.slice(1);
 
     return(
         <Container className="section-content">
@@ -17,14 +17,15 @@ function Main (){
                     <div className="section-content__author">Гарриет Ван Хорн</div>
                 </Col>
                 <Col xs={1} md={1}></Col>
-                <Slider  className="slider"/>
+                <Slider />
             </Row> 
         </Container>
     )
 }
 
-function Slider () {
+function Slider(): JSX.Element  {
     return(
+    <div className="slider">
         <Carousel className="carousel img-fluid col-10 col-md-10 offset-md-1">
         <Carousel.Item interval={1000}>
             <img
@@ -61,6 +62,7 @@ function Slider () {
             </Carousel.Caption>
         </Carousel.Item>
         </Carousel>
+    </div>
     )
 }
 

@@ -1,7 +1,7 @@
 import { Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap'
 import {BrowserRouter as Router} from "react-router-dom";
 
-function Header (){
+function Header(): JSX.Element {
     return(
      <div className="header">
     <Router>
@@ -16,7 +16,7 @@ function Header (){
 
         </Nav>
         <Form inline className="search-form">
-          <FormControl className="input" type="text" placeholder="Поиск" className="mr-sm-2" />
+          <FormControl className="input mr-sm-2" type="text" placeholder="Поиск"/>
           <Button className="button" variant="outline-secondary">Поиск</Button>
         </Form>
       </Navbar.Collapse>

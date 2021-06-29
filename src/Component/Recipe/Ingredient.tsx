@@ -1,15 +1,15 @@
-import { getRecipe } from "../../Models/Recipets";
+import { getRecipe, IIngridient, } from "../../Models/Recipets";
 import { useParams } from "react-router-dom";
 
-function Ingredient() {
-  const { id } = useParams();
+function Ingredient(): JSX.Element  {
+  const { id }: any = useParams();
   const recipe = getRecipe(id);
-  let total = [];
-  let totalСalories = 0;
+  let total: number[] = [];
+  let totalСalories: number = 0;
 
-  const ingredientRendered = recipe.ingridients.map((ingridient) => {
-    const name = ingridient.name;
-    const nameRendered = name.charAt(0).toUpperCase() + name.slice(1);
+  const ingredientRendered: JSX.Element[] = recipe.ingridients.map((ingridient: IIngridient) => {
+    const name: string = ingridient.name;
+    const nameRendered: string = name.charAt(0).toUpperCase() + name.slice(1);
 
     total.push(ingridient.calories);
     totalСalories = total.reduce((a, b) => a + b, 0)
@@ -26,6 +26,7 @@ function Ingredient() {
 
 
   return (
+    
     <div className='ingredient col-10 col-md-10 offset-md-1'>
       <div className='ingredient__subtitle_flex'>
         <h3 className='ingredient__subtitle'>ИНГРЕДИЕНТЫ</h3>

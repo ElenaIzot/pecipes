@@ -1,20 +1,27 @@
-import { Row, Col, Pagination, Card, Spinner } from "react-bootstrap";
+import { Row, Col, Pagination, Card, Spinner, Button } from "react-bootstrap";
 import { Route, Link, useLocation, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Recipe from "../Recipe/Recipe";
-import { getRecipesFromServerAsync } from '../../Models/Recipets';
+import { getRecipesFromServerAsync, IPage, IRecipe, } from '../../Models/Recipets';
 import { useState, useEffect } from 'react';
 
-function useQuery() {
+
+function useQuery(): URLSearchParams {
   return new URLSearchParams(useLocation().search);
 }
 
-function Grid() {
-  const query = useQuery();
-  const pageNumber = parseInt(query.get("page") || '0');
+function Grid(): JSX.Element  {
+  const query: URLSearchParams = useQuery();
+  const pageNumber: number = parseInt(query.get("page") || '0');
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState({});
+  const [isLoading, setIsLoading]= useState<boolean>(true);
+  const [page, setPage] = useState<IPage<IRecipe>>({
+    totalPages: 0,
+    nextPage: 0,
+    prevPage: 0,
+    currentPage: 0,
+    result: [],
+  });
 
   useEffect(() => {
     getRecipesFromServerAsync(pageNumber).then(response => {
@@ -22,12 +29,6 @@ function Grid() {
       setIsLoading(false);
     })
   }, [page]);
-
-  // function handleClick() {
-    
-  //   console.log('По ссылке кликнули.');
-  //   return (setIsLoading(true));
-  // }
 
   if (isLoading === true) {
     return (
@@ -37,11 +38,11 @@ function Grid() {
           <Spinner animation="border" variant="secondary" className="page-loader__spinner"></Spinner>
         </div>
         <Route exact path="/recipes/card/:id" children={<Recipe />} />
-        <Pages className="section-resipes__pages" totalPages={page.totalPages}> </Pages>
+        <Pages /> 
       </Container>
     )
   } else {
-    let recipesRendered = page.result.map(recipe => {
+    let recipesRendered: JSX.Element[] = page.result.map(recipe => {
       return (
         <Col xs={6} md={3}>
           <GridItem key={recipe.id} recipe={recipe}></GridItem>
@@ -55,13 +56,13 @@ function Grid() {
           {recipesRendered}
           <Route exact path="/recipes/card/:id" children={<Recipe />} />
         </Row>
-        <Pages className="section-resipes__pages" totalPages={page.totalPages}> </Pages>
+        <Pages />
       </Container>
     )
   }
 }
 
-function GridItem({ recipe }) {
+function GridItem({ recipe }: any): JSX.Element {
   const link = `recipes/cards/${recipe.id}`;
 
   return (
@@ -80,78 +81,91 @@ function GridItem({ recipe }) {
   )
 }
 
-function Pages() {
-  const query = useQuery();
+function Pages(): JSX.Element {
+  const query: URLSearchParams = useQuery();
   const history = useHistory();
-  const pageNumber = parseInt(query.get("page") || '0')
+  const pageNumber:number = parseInt(query.get("page") || '0')
 
-  const [page, setPage] = useState({});
+  const [page, setPage] = useState<IPage<IRecipe>>({
+    totalPages: 0,
+    nextPage: 0,
+    prevPage: 0,
+    currentPage: 0,
+    result: [],
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-
     getRecipesFromServerAsync(pageNumber).then(response => {
       setPage(response)
+      console.log(response)
       setIsLoading(false);
     });
-
-
   }, [page]);
 
-  let items = [];
+  let items: JSX.Element[]= [];
 
-  function handleClickNext(e) {
-    e.preventDefault();
-    const link = `/recipes/?page=${page.nextPage}`;
+  function handleClickNext(): void {
+    const link: string = `/recipes/?page=${page.nextPage}`;
     history.push(link);
   }
 
-  function handleClickPrev(e) {
-    e.preventDefault();
-    const link = `/recipes/?page=${page.prevPage}`;
+  function handleClickPrev(): void  {
+    const link: string = `/recipes/?page=${page.prevPage}`;
     history.push(link);
-
   }
 
-  const pageNeighbours = 5;
-  const startPage = Math.max(1, page.currentPage - pageNeighbours);
-  const endPage = Math.min(page.totalPages, page.currentPage + pageNeighbours);
+  const pageNeighbours: number = 5;
+  const startPage: number = Math.max(1, page.currentPage - pageNeighbours);
+  const endPage: number = Math.min(page.totalPages, page.currentPage + pageNeighbours);
 
-  for (let page = startPage; page <= endPage; page++) {
-    function navigate() {
-      const link = `/recipes/?page=${page}`;
-
+  for (let thisPage = startPage; thisPage <= endPage; thisPage++) {
+   let navigate = () => {
+      const link: string = `/recipes/?page=${thisPage}`;
       history.push(link)
     }
 
     items.push(
-      <Pagination.Item key={page} active={page === page.currentPage} onClick={navigate}>
-        {page}
+      // <Button  variant="outline-secondary" key={thisPage} active={thisPage === page.currentPage} onClick={navigate}>
+      //   {thisPage}
+      // </Button>
+
+//СИНИЙ АКТИВНЫЙ ПОМЕНЯТЬ НУЖНО
+      <Pagination.Item key={thisPage} active={thisPage === page.currentPage} onClick={navigate}>
+        {thisPage}
       </Pagination.Item>
     );
   }
-
+ 
   if (page.currentPage == 1) {
     return (
-      <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
+      <div className="section-resipes__pages">
+      <Pagination className="pagination justify-content-center pages">
         {items}
         <Pagination.Next onClick={handleClickNext}>Следующая</Pagination.Next>
       </Pagination>
+      </div>
     )
   } else if (page.currentPage == page.totalPages) {
     return (
-      <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
+      <div className="section-resipes__pages">
+      <Pagination className="pagination justify-content-center pages">
+      {/* <Pagination className="pagination justify-content-center pages" variant="outline-secondary"> */}
         <Pagination.Next onClick={handleClickPrev}>Предыдущая</Pagination.Next>
         {items}
       </Pagination>
+      </div>
     )
   } else {
     return (
-      <Pagination className="pagination justify-content-center pages" variant="outline-secondary">
+      <div className="section-resipes__pages">
+      <Pagination className="pagination justify-content-center pages">
+      {/* <Pagination className="pagination justify-content-center pages" variant="outline-secondary"> */}
         <Pagination.Next onClick={handleClickPrev}>Предыдущая</Pagination.Next>
         {items}
         <Pagination.Next onClick={handleClickNext}>Следующая</Pagination.Next>
       </Pagination>
+      </div>
     )
   }
 };

@@ -1,14 +1,11 @@
-import { getRecipe } from "../../Models/Recipets";
-import { useParams, useHistory } from "react-router-dom";
+import { getRecipe, IRecipe } from "../../Models/Recipets";
+import { useParams } from "react-router-dom";
 
-
-function Instruction (){
-    let history = useHistory();
-    const { id } = useParams();
-
+function Instruction(): JSX.Element {
+    const { id }: any = useParams();
     const recipe = getRecipe(id);
-     
-    const instructionRendered = recipe.instruction.map((step, index) => {
+    
+    const instructionRendered: JSX.Element[] = recipe.instruction.map((step: string, index: number) => {
       return (
             <li className='instruction__text' key={index}>
                 {step}

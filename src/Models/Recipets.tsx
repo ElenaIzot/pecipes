@@ -282,25 +282,25 @@ const recipes = [
   },
 ]
 
-interface Ingridient {
+export interface IIngridient {
   name: string,
   count?: number | null,
   measure: string,
   calories: number,
 }
 
-interface Recipe {
+export interface IRecipe {
   id: number,
   image: string,
   title: string,
   time: number,
   portions: number,
-  ingridients: Ingridient[],
+  ingridients: IIngridient[],
   instruction: string[],
 }
 
-export function getRecipe(id: number): Recipe {
-  const copyFrom: Recipe = recipes[id % recipes.length];
+export function getRecipe(id: number): IRecipe {
+  const copyFrom: IRecipe = recipes[id % recipes.length];
   let { image, title, time, ingridients, instruction, portions } = copyFrom;
 
   return {
@@ -314,9 +314,9 @@ export function getRecipe(id: number): Recipe {
   }
 }
 
-function getRecipes(pageNumber: number): Recipe[] {
+function getRecipes(pageNumber: number): IRecipe[] {
   const RECIPIES_PER_PAGE: number = 16;
-  const recipies: Recipe[] = [];
+  const recipies: IRecipe[] = [];
 
   for (let i = 1; i <= RECIPIES_PER_PAGE; ++i) {
     const cardIndex: number = pageNumber * RECIPIES_PER_PAGE + i;
@@ -326,7 +326,7 @@ function getRecipes(pageNumber: number): Recipe[] {
   return recipies;
 }
 
-interface Page<T> {
+export interface IPage<T> {
   totalPages: number,
   nextPage: number,
   prevPage: number,
@@ -334,7 +334,7 @@ interface Page<T> {
   result: T[],
 }
 
-export function getRecipesFromServer(page: number): Page<Recipe> {
+export function getRecipesFromServer(page: number): IPage<IRecipe> {
   const TOTAL_PAGES: number = 100;
   const ITEM_PER_PAGE: number = 16;
 
@@ -347,7 +347,7 @@ export function getRecipesFromServer(page: number): Page<Recipe> {
   }
 }
 
-export function getRecipesFromServerAsync(page: number): Promise<Page<Recipe>> {
+export function getRecipesFromServerAsync(page: number): Promise<IPage<IRecipe>> {
   return new Promise((resolve, reject) => {
     const delay: number = Math.random() * (1000 - 200) + 200; // 0.2 to 5 seconds
     setTimeout(() => {

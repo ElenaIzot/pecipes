@@ -1,8 +1,8 @@
 import { Container } from "react-bootstrap";
 
-function Contact (){
-    let title = 'наши контакты';
-    let result = title.charAt(0).toUpperCase() + title.slice(1);
+function Contact(): JSX.Element  {
+    let title: string = 'наши контакты';
+    let result: string = title.charAt(0).toUpperCase() + title.slice(1);
 
     return(
         <Container className="section-content">
