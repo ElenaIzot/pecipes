@@ -5,7 +5,6 @@ import Recipe from "../Recipe/Recipe";
 import { getRecipesFromServerAsync, IPage, IRecipe, } from '../../Models/Recipets';
 import { useState, useEffect } from 'react';
 
-
 function useQuery(): URLSearchParams {
   return new URLSearchParams(useLocation().search);
 }
@@ -28,6 +27,7 @@ function Grid(): JSX.Element  {
       setPage(response)
       setIsLoading(false);
     })
+    
   }, [page]);
 
   if (isLoading === true) {

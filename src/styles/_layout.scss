@@ -1,6 +1,5 @@
 @import "./variables";
 
-
 #root {
     background-color: #f2f2f2;
 }
@@ -9,7 +8,10 @@
     margin-bottom: 72px;
 }
 
-.section-content{margin-bottom: 72px;}
+.section-content{
+    margin-bottom: 72px;
+    border-radius: 6px;
+}
 
 .card{
     margin-bottom: $step*4;

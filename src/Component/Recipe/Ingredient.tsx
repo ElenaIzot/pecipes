@@ -4,15 +4,15 @@ import { useParams } from "react-router-dom";
 function Ingredient(): JSX.Element  {
   const { id }: any = useParams();
   const recipe = getRecipe(id);
-  let total: number[] = [];
   let totalСalories: number = 0;
 
   const ingredientRendered: JSX.Element[] = recipe.ingridients.map((ingridient: IIngridient) => {
     const name: string = ingridient.name;
     const nameRendered: string = name.charAt(0).toUpperCase() + name.slice(1);
 
-    total.push(ingridient.calories);
-    totalСalories = total.reduce((a, b) => a + b, 0)
+    // total.push(ingridient.calories);
+    // totalСalories = total.reduce((a, b) => a + b, 0)
+    totalСalories += ingridient.calories;
 
     return (
       <div className='ingredient__items'>
