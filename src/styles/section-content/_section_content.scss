@@ -1,37 +1,33 @@
-.section-content{
+.section-content {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: $step*3;
     min-height: 75vh;
-    max-height: auto;
     text-align: justify;
     border: solid 1px $border-color;
     font-family: PT Serif, Georgia, serif;
     color: $text-color;
     background-color: $bg-color;
-    &__title{
+    text-align: center;
+    &__title {
         font-size: 48px;
         font-weight: 800;
-        color: $text-color;
-        padding-top: $step*8;
-        text-align: center;
-        font-family: PT Serif, Georgia, serif;
+        padding-top: $step * 6;
     }
-    &__text{
+    &__text {
         font-size: 18px;
         font-weight: 300;
-        padding: $step*4 $step*8;
-        text-align: center;
-        line-height: 2;
-    }
-    &__author{
-        font-size: 18px;
-        font-weight: 600;
-        padding: $step*2 $step*2;
-        text-align: right;
-       
+        padding: 0px $step * 8;
+        &_bold {
+            font-weight: 600;
+            text-align: right;
+        }
     }
 }
 
-.carousel{
+.carousel {
     color: $text-color;
-    width:800px;
-    height:600px;
+    width: 100%;
+    height: auto;
+    margin: $step * 3 auto;
 }

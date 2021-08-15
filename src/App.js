@@ -14,14 +14,12 @@ function App() {
     <>
       <Router>
        <Header />
-      <div>
         <Switch>
           <Route exact path="/" component={Main} />
           <Route exact path="/recipes" children={<Grid />} />
           <Route exact path="/recipes/cards/:id" children={<Recipe />} />
           <Route exact path="/contact" component={Contact} />
         </Switch>
-      </div>
        <Footer />
     </Router>
 

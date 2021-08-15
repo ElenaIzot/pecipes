@@ -4,6 +4,7 @@
     font-family: PT Serif, Georgia, serif;
     color: $text-color;
     background-color: $bg-color;
+    border-radius: 6px;
     &__pages {
        background-color: $bg-color;
     }
@@ -25,6 +26,16 @@
     }
 }
 
+.button-pagination {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    // color: $bg-color;
+    // background-color: $color-active-btn;
+    // border-color:$color-active-link;
+    border-radius: 0;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 
 .pagination > li > a
 {
@@ -54,3 +65,4 @@
     background-color: $color-active-btn;
     border: solid 1px $color-active-btn;
 }
+

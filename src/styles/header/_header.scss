@@ -8,29 +8,32 @@
 }
 
 .menu {
-    &__link{
+    &__link {
         display: flex;
-        padding-left: $step*2; 
+        padding-left: $step * 2;
         text-align: center;
         line-height: 2;
         color: $text-color;
-        text-decoration: none; 
-       }
-       &__link:hover {
-        color: $color-active-link; 
+        text-decoration: none;
+        border-right: 1px solid rgba(0, 0, 0, 0.08);
+        padding: 0px $step;
+    }
+    &__link:hover {
+        color: $color-active-link;
         text-decoration: none;
     }
 }
 
-.logo{
-    font-weight: 600;
-    font-size: 18px;
+.logo {
+    width: 32px;
+    height: 42px;
+    margin-bottom: $step;
 }
 
 .button {
-    color:$color-btn;
+    color: $color-btn;
 }
 
-.input{
-    color:$color-btn;
+.input {
+    color: $color-btn;
 }
