@@ -14,7 +14,7 @@ function GridItem({ recipe }: any): JSX.Element {
             <div className="card__text">Ингридиентов: {recipe.ingridients.length}</div>
             <div className="card__text">Количество порций: {recipe.portions}</div>
           </Card.Text>
-          <Link className="card__link" to={link}>Открыть рецепт {recipe.id}</Link>
+          <Link className="card__link" to={link}>Открыть рецепт</Link>
         </Card.Body>
       </Card>
     )
